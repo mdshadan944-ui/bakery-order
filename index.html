@@ -397,6 +397,9 @@
     <label for="address" data-i18n="delivery_address">Delivery address</label>
     <textarea id="address" placeholder="House/flat, street, area, landmark, pincode" data-i18n-placeholder="placeholder_address"></textarea>
 
+    <label for="delivery-date" data-i18n="delivery_date">Delivery date</label>
+    <input type="date" id="delivery-date">
+
     <div class="charge-hint" data-i18n="delivery_note">Free delivery within 2 km. Beyond that, the delivery charge will be decided by our delivery agent.</div>
 
     <label data-i18n="payment_method">Payment method</label>
@@ -435,6 +438,10 @@
   const UPI_ID = "paytmqr5z3b45@ptys"; // Your real UPI ID (from Paytm QR code)
   const UPI_PAYEE_NAME = "Bakery Name"; // TODO: replace with your shop's name as it should show in the UPI app
 
+  // Delivery date: don't let customers pick a date before today
+  const dateInput = document.getElementById('delivery-date');
+  dateInput.min = new Date().toISOString().split('T')[0];
+
   // ---------- Language / translations ----------
   const TRANSLATIONS = {
     en: {
@@ -457,6 +464,7 @@
       placeholder_phone: "e.g. 98765 43210",
       delivery_address: "Delivery address",
       placeholder_address: "House/flat, street, area, landmark, pincode",
+      delivery_date: "Delivery date",
       delivery_note: "Free delivery within 2 km. Beyond that, the delivery charge will be decided by our delivery agent.",
       payment_method: "Payment method",
       cod: "Cash on delivery",
@@ -468,6 +476,9 @@
       send_btn: "Send order on WhatsApp",
       wa_new_order: "New order:",
       wa_items_total: "Items total: ",
+      wa_date: "Delivery date: ",
+      wa_khowa_subtotal: "Khowa Puff total qty: ",
+      wa_coconut_subtotal: "Coconut Puff total qty: ",
       wa_delivery_note: "Delivery: free within 2 km, otherwise to be decided by the delivery agent.",
       wa_payment: "Payment: ",
       wa_upi_paying: "UPI (paying via QR)",
@@ -495,6 +506,7 @@
       placeholder_phone: "जैसे 98765 43210",
       delivery_address: "डिलीवरी पता",
       placeholder_address: "घर/फ्लैट, सड़क, क्षेत्र, लैंडमार्क, पिनकोड",
+      delivery_date: "डिलीवरी की तारीख",
       delivery_note: "2 किमी के भीतर मुफ़्त डिलीवरी। उससे आगे, डिलीवरी शुल्क हमारे डिलीवरी एजेंट द्वारा तय किया जाएगा।",
       payment_method: "भुगतान का तरीका",
       cod: "डिलीवरी पर नकद भुगतान",
@@ -506,6 +518,9 @@
       send_btn: "WhatsApp पर ऑर्डर भेजें",
       wa_new_order: "नया ऑर्डर:",
       wa_items_total: "आइटम का कुल: ",
+      wa_date: "डिलीवरी की तारीख: ",
+      wa_khowa_subtotal: "खोवा पफ कुल संख्या: ",
+      wa_coconut_subtotal: "नारियल पफ कुल संख्या: ",
       wa_delivery_note: "डिलीवरी: 2 किमी के भीतर मुफ़्त, उससे आगे डिलीवरी एजेंट तय करेंगे।",
       wa_payment: "भुगतान: ",
       wa_upi_paying: "UPI (QR से भुगतान)",
@@ -533,6 +548,7 @@
       placeholder_phone: "ಉದಾ. 98765 43210",
       delivery_address: "ಡೆಲಿವರಿ ವಿಳಾಸ",
       placeholder_address: "ಮನೆ/ಫ್ಲ್ಯಾಟ್, ರಸ್ತೆ, ಪ್ರದೇಶ, ಲ್ಯಾಂಡ್‌ಮಾರ್ಕ್, ಪಿನ್‌ಕೋಡ್",
+      delivery_date: "ಡೆಲಿವರಿ ದಿನಾಂಕ",
       delivery_note: "2 ಕಿ.ಮೀ ಒಳಗೆ ಉಚಿತ ಡೆಲಿವರಿ. ಅದಕ್ಕಿಂತ ಹೆಚ್ಚು ದೂರಕ್ಕೆ, ಡೆಲಿವರಿ ಶುಲ್ಕವನ್ನು ನಮ್ಮ ಡೆಲಿವರಿ ಏಜೆಂಟ್ ನಿರ್ಧರಿಸುತ್ತಾರೆ.",
       payment_method: "ಪಾವತಿ ವಿಧಾನ",
       cod: "ಡೆಲಿವರಿ ಸಮಯದಲ್ಲಿ ನಗದು",
@@ -544,6 +560,9 @@
       send_btn: "WhatsApp ನಲ್ಲಿ ಆರ್ಡರ್ ಕಳುಹಿಸಿ",
       wa_new_order: "ಹೊಸ ಆರ್ಡರ್:",
       wa_items_total: "ಐಟಂಗಳ ಒಟ್ಟು: ",
+      wa_date: "ಡೆಲಿವರಿ ದಿನಾಂಕ: ",
+      wa_khowa_subtotal: "ಖೋವಾ ಪಫ್ ಒಟ್ಟು ಸಂಖ್ಯೆ: ",
+      wa_coconut_subtotal: "ಕೋಕೋನಟ್ ಪಫ್ ಒಟ್ಟು ಸಂಖ್ಯೆ: ",
       wa_delivery_note: "ಡೆಲಿವರಿ: 2 ಕಿ.ಮೀ ಒಳಗೆ ಉಚಿತ, ಅದಕ್ಕಿಂತ ಹೆಚ್ಚು ದೂರಕ್ಕೆ ಡೆಲಿವರಿ ಏಜೆಂಟ್ ನಿರ್ಧರಿಸುತ್ತಾರೆ.",
       wa_payment: "ಪಾವತಿ: ",
       wa_upi_paying: "UPI (QR ಮೂಲಕ ಪಾವತಿ)",
@@ -628,9 +647,10 @@
     const name = document.getElementById('name').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const address = document.getElementById('address').value.trim();
+    const deliveryDate = document.getElementById('delivery-date').value;
     const errEl = document.getElementById('form-err');
 
-    if(!name || !phone || !address){
+    if(!name || !phone || !address || !deliveryDate){
       errEl.classList.add('show');
       return;
     }
@@ -638,6 +658,17 @@
 
     const goods = itemsTotal();
     const payMethod = document.querySelector('input[name="pay"]:checked').value;
+
+    // Count + amount, per flavour (adds up whole + quarter pieces)
+    const khowaQty = counts['khowa-whole'] + counts['khowa-quarter'];
+    const khowaAmt = counts['khowa-whole']*items['khowa-whole'].price + counts['khowa-quarter']*items['khowa-quarter'].price;
+    const coconutQty = counts['coconut-whole'] + counts['coconut-quarter'];
+    const coconutAmt = counts['coconut-whole']*items['coconut-whole'].price + counts['coconut-quarter']*items['coconut-quarter'].price;
+
+    const formattedDate = new Date(deliveryDate + 'T00:00:00').toLocaleDateString(
+      currentLang === 'hi' ? 'hi-IN' : currentLang === 'kn' ? 'kn-IN' : 'en-IN',
+      { day: 'numeric', month: 'long', year: 'numeric' }
+    );
 
     let lines = [t('wa_new_order')];
     for(const key in counts){
@@ -647,7 +678,10 @@
         lines.push("- " + label + " x" + counts[key] + " = ₹" + (line.price*counts[key]));
       }
     }
+    if(khowaQty > 0) lines.push(t('wa_khowa_subtotal') + khowaQty + " = ₹" + khowaAmt);
+    if(coconutQty > 0) lines.push(t('wa_coconut_subtotal') + coconutQty + " = ₹" + coconutAmt);
     lines.push(t('wa_items_total') + "₹" + goods);
+    lines.push(t('wa_date') + formattedDate);
     lines.push(t('wa_delivery_note'));
     lines.push(t('wa_payment') + (payMethod === 'upi' ? t('wa_upi_paying') : t('cod')));
     lines.push("");
